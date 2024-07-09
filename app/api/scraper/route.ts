@@ -2,6 +2,7 @@ import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 import puppeteer from "puppeteer";
 import { v4 as uuidv4 } from "uuid";
+import ConfigOption from "@/types/ConfigOption";
 
 const formatDate = (dateString: string | undefined): string | null => {
   if (!dateString) return null;
@@ -60,131 +61,14 @@ async function forceClick(page: any, selector: string) {
 }
 
 export async function GET(request: Request) {
-  console.log("GET request received");
   const supabase = createClient();
 
-  type ConfigOption = {
-    [key: string]: any;
-    comparison: string;
-    where: string;
-    postcode: string;
-    distributor: string;
-    energyConcession: string;
-    solarPanels: string;
-    peopleInHome: string;
-    roomsInHome: string;
-    fridges: string;
-    gasConnection: string;
-    heatingHome: string | string[];
-    coolingHome: string | string[];
-    dryer: string;
-    dryerUsage: string;
-    hotWaterSystem: string;
-    controlledLoad: string;
-    seaDistance: string;
-    washingMachine: string;
-    washingMachineUsage: string;
-  };
+  const configs = await supabase.from("configurations").select("*");
 
-  //default config to seed db
-  const options: ConfigOption[] = [
-    {
-      comparison: "electricity",
-      where: "home",
-      postcode: "3000",
-      distributor: "Citipower",
-      energyConcession: "no",
-      solarPanels: "no",
-      peopleInHome: "4",
-      roomsInHome: "8",
-      fridges: "2",
-      gasConnection: "yes",
-      heatingHome: "None",
-      coolingHome: "None",
-      dryer: "no",
-      dryerUsage: "0",
-      hotWaterSystem: "Electric",
-      controlledLoad: "no",
-      seaDistance: "don't know",
-      washingMachine: "yes",
-      washingMachineUsage: "2-3",
-    },
-    {
-      comparison: "electricity",
-      where: "home",
-      postcode: "3070",
-      distributor: "Citipower",
-      energyConcession: "no",
-      solarPanels: "no",
-      peopleInHome: "4",
-      roomsInHome: "8",
-      fridges: "2",
-      gasConnection: "yes",
-      heatingHome: "None",
-      coolingHome: "None",
-      dryer: "no",
-      dryerUsage: "0",
-      hotWaterSystem: "Electric",
-      controlledLoad: "no",
-      seaDistance: "don't know",
-      washingMachine: "yes",
-      washingMachineUsage: "2-3",
-    },
-  ];
-
-  const insertConfiguration = async (
-    config: ConfigOption & { created_at: string; updated_at: string }
-  ) => {
-    const mapConfigToDbColumns = (config: Record<string, any>) => {
-      const mapping: { [key: string]: string } = {
-        where: "location",
-        postcode: "postcode",
-        distributor: "distributor",
-        controlledLoad: "controlledload",
-        energyConcession: "energyconcession",
-        solarPanels: "solarpanels",
-        peopleInHome: "peopleinhome",
-        roomsInHome: "roomsinhome",
-        gasConnection: "gasconnection",
-        heatingHome: "heatinghome",
-        coolingHome: "coolinghome",
-        dryer: "dryer",
-        dryerUsage: "dryerusage",
-        hotWaterSystem: "hotwatersystem",
-        seaDistance: "seadistance",
-        washingMachine: "washingmachine",
-        washingMachineUsage: "washingmachineusage",
-      };
-
-      return Object.keys(config).reduce((acc: Record<string, any>, key) => {
-        const dbColumn = mapping[key] || key.toLowerCase();
-        acc[dbColumn] = config[key];
-        return acc;
-      }, {});
-    };
-
-    const dbFriendlyConfig = mapConfigToDbColumns(config);
-    dbFriendlyConfig.id = uuidv4();
-
-    console.log(`Inserting configuration:`, dbFriendlyConfig);
-
-    const { data, error } = await supabase
-      .from("configurations")
-      .insert([dbFriendlyConfig])
-      .select();
-
-    if (error) {
-      console.error("Error inserting configuration:", error);
-      return null;
-    }
-
-    console.log("Configuration inserted successfully");
-
-    return data[0];
-  };
+  const options: ConfigOption[] = configs.data || [];
 
   async function getServerCacheId(config: ConfigOption) {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
     await page.setViewport({ width: 1200, height: 800 });
@@ -225,23 +109,29 @@ export async function GET(request: Request) {
 
     try {
       await forceClick(page, `#${config.comparison}`);
-      await forceClick(page, `input#customer_${config.where}`);
+      await forceClick(page, `input#customer_${config.location}`);
       await forceClick(page, "input#moving");
+
+      await page.waitForSelector("input#postcode", {
+        visible: true,
+      });
       await page.type("input#postcode", config.postcode);
 
       await page.waitForSelector('input[value="Submit postcode"]', {
         visible: true,
       });
+
       await forceClick(page, 'input[value="Submit postcode"]');
+
       await sleep(2000);
 
       /* new code to account for distributors remvoe when understodd */
       const distributorListSelector = "ul.distributor-list";
+
       const distributorListPresent =
         (await page.$(distributorListSelector)) !== null;
 
       if (distributorListPresent) {
-        console.log("Distributor list found");
         const distributorMap: { [key: string]: string } = {
           Citipower: "radio-Citipower-All",
           Jemena: "radio-Jemena-All",
@@ -262,19 +152,18 @@ export async function GET(request: Request) {
       }
       /* new code to account for distributors remvoe when understodd */
 
+      await sleep(2000);
+
       await forceClick(
         page,
-        `#concession${config.energyConcession === "yes" ? "Yes" : "No"}`
-      );
-      await forceClick(
-        page,
-        `#concession${config.energyConcession === "yes" ? "Yes" : "No"}`
+        `#concession${config.energyconcession === "yes" ? "Yes" : "No"}`
       );
 
       await forceClick(
         page,
-        `input#solar${config.solarPanels === "yes" ? "Yes" : "No"}`
+        `input#solar${config.solarpanels === "yes" ? "Yes" : "No"}`
       );
+
       await forceClick(page, "input#disclaimer");
       await forceClick(page, 'button[name="next"]');
 
@@ -284,33 +173,36 @@ export async function GET(request: Request) {
 
       await page.select(
         'select[formcontrolname="hhSize"]',
-        config.peopleInHome
+        config.peopleinhome
       );
+
       await page.select(
         'select[formcontrolname="totalRooms"]',
-        config.roomsInHome
+        config.roomsinhome
       );
+
       await page.select(
         'select[formcontrolname="fridgeCount"]',
         config.fridges
       );
+
       await page.select(
         'select[formcontrolname="gasConnection"]',
-        config.gasConnection === "yes" ? "1" : "4"
+        config.gasconnection === "yes" ? "1" : "4"
       );
 
-      if (config.heatingHome === "None") {
+      if (config.heatinghome === "None") {
         await forceClick(page, "input#spaceHeatingNone");
       } else {
-        for (const heatingType of config.heatingHome) {
+        for (const heatingType of config.heatinghme) {
           await forceClick(page, `input#${heatingType.replace(/ /g, "")}`);
         }
       }
 
-      if (config.coolingHome === "None") {
+      if (config.coolinghome === "None") {
         await forceClick(page, "input#spaceCoolingNone");
       } else {
-        for (const coolingType of config.coolingHome) {
+        for (const coolingType of config.coolinghome) {
           await forceClick(page, `input#${coolingType.replace(/ /g, "")}`);
         }
       }
@@ -322,17 +214,17 @@ export async function GET(request: Request) {
       if (config.dryer === "yes") {
         await page.select(
           'select[formcontrolname="dryerUsage"]',
-          config.dryerUsage
+          config.dryerusage
         );
       }
 
       await forceClick(
         page,
-        `input#waterHeating${config.hotWaterSystem.replace(/ /g, "")}`
+        `input#waterHeating${config.hotwatersystem.replace(/ /g, "")}`
       );
       await forceClick(
         page,
-        `input#controlledLoad${config.controlledLoad === "yes" ? "Yes" : "No"}`
+        `input#controlledLoad${config.controlledload === "yes" ? "Yes" : "No"}`
       );
       await forceClick(page, 'button[type="submit"]');
 
@@ -356,24 +248,6 @@ export async function GET(request: Request) {
         throw new Error("Offers data not found");
       }
 
-      const configEntry = await insertConfiguration({
-        ...config,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
-      });
-
-      if (!configEntry) {
-        console.log("Error inserting configuration");
-        return null;
-      }
-
-      const configId = configEntry.id;
-
-      console.log(
-        "offers length 2:",
-        offersData.offers.Electricity.offersList.length
-      );
-
       const offerEntries: any[] = [];
 
       offersData.offers.Electricity.offersList.forEach((offer: any) => {
@@ -383,7 +257,7 @@ export async function GET(request: Request) {
           //all of the fields from the offer object
           id: uuidv4(),
           offer_id: details.offerId,
-          config_id: configId,
+          config_id: config.id,
           price: details.basePrice,
           retailer_name: details.retailerName,
           offer_name: details.offerName,
@@ -456,14 +330,14 @@ export async function GET(request: Request) {
 
       if (error) {
         console.error("Error inserting offer:", error);
-        console.error("Full error object:", JSON.stringify(error, null, 2));
+
         return null;
       }
 
       await browser.close();
       return offersData;
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Errorhere :", error);
       await browser.close();
       return null;
     }
