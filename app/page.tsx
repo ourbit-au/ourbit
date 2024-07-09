@@ -1,38 +1,65 @@
-import DeployButton from "../components/DeployButton";
-import AuthButton from "../components/AuthButton";
+import DataTable from "@/components/DataTable";
+import TestButton from "@/components/TestButton";
 import { createClient } from "@/utils/supabase/server";
-import ConnectSupabaseSteps from "@/components/tutorial/ConnectSupabaseSteps";
-import SignUpUserSteps from "@/components/tutorial/SignUpUserSteps";
-import Header from "@/components/Header";
+
+export type Configuration = {
+  comparison: string;
+  where: string;
+  postcode: string;
+  energyConcession: string;
+  solarPanels: string;
+  peopleInHome: string;
+  roomsInHome: string;
+  fridges: string;
+  gasConnection: string;
+  heatingHome: string;
+  coolingHome: string;
+  dryer: string;
+  dryerUsage: string;
+  hotWaterSystem: string;
+  controlledLoad: string;
+  seaDistance: string;
+  washingMachine: string;
+  washingMachineUsage: string;
+};
 
 export default async function Index() {
-  const canInitSupabaseClient = () => {
-    // This function is just for the interactive tutorial.
-    // Feel free to remove it once you have Supabase connected.
-    try {
-      createClient();
-      return true;
-    } catch (e) {
-      return false;
-    }
+  const supabase = createClient();
+
+  const query = {
+    postcode: "3000",
   };
 
-  const isSupabaseConnected = canInitSupabaseClient();
+  let { data, error } = await supabase.from("offers").select("*");
+
+  //how you filter data in supabase
+  // let { data, error } = await supabase
+  //   .from("offers")
+  //   .select("*")
+  //   .eq("postcode", query.postcode)
+  //   .eq("tariff_type", "Single rate")
+  //   .order("total_inc_gst", { ascending: true });
+
+  if (!data) {
+    return <div>Loading...</div>;
+  }
+
+  //configuring what data to display - can omit this to display all data - columns must be defined in DataTable component
+  const offers = data.map((offer: any) => ({
+    offerId: offer.offerId,
+    retailerName: offer.contract_leng,
+    offerName: offer.offer_name,
+    tariffType: offer.tariff_type,
+    totalIncGst: parseFloat(offer.total_inc_gst),
+  }));
 
   return (
     <div className="flex-1 w-full flex flex-col gap-20 items-center">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
-        <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-          <DeployButton />
-          {isSupabaseConnected && <AuthButton />}
-        </div>
-      </nav>
-
       <div className="flex-1 flex flex-col gap-20 max-w-4xl px-3">
-        <Header />
         <main className="flex-1 flex flex-col gap-6">
-          <h2 className="font-bold text-4xl mb-4">Next steps</h2>
-          {isSupabaseConnected ? <SignUpUserSteps /> : <ConnectSupabaseSteps />}
+          <h2 className="font-bold text-4xl mb-4">Results</h2>
+          <DataTable data={offers} />
+          <TestButton />
         </main>
       </div>
 
@@ -40,12 +67,12 @@ export default async function Index() {
         <p>
           Powered by{" "}
           <a
-            href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
+            href="https://ourbit.com.au"
             target="_blank"
             className="font-bold hover:underline"
             rel="noreferrer"
           >
-            Supabase
+            Ourbit
           </a>
         </p>
       </footer>
