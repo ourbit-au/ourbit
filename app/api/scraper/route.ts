@@ -11,6 +11,7 @@ export async function GET(request: Request) {
   const supabase = createClient();
 
   type ConfigOption = {
+    [key: string]: string | string[] | undefined;
     comparison: string;
     where: string;
     postcode: string;
@@ -23,7 +24,7 @@ export async function GET(request: Request) {
     heatingHome: string | string[];
     coolingHome: string | string[];
     dryer: string;
-    dryerUsage?: string;
+    dryerUsage: string;
     hotWaterSystem: string;
     controlledLoad: string;
     seaDistance: string;
@@ -46,6 +47,7 @@ export async function GET(request: Request) {
       heatingHome: "None",
       coolingHome: "None",
       dryer: "no",
+      dryerUsage: "0",
       hotWaterSystem: "Electric",
       controlledLoad: "no",
       seaDistance: "don't know",
@@ -58,7 +60,7 @@ export async function GET(request: Request) {
     config: ConfigOption & { created_at: string; updated_at: string }
   ) => {
     const mapConfigToDbColumns = (config: Record<string, any>) => {
-      const mapping = {
+      const mapping: { [key: string]: string } = {
         where: "location",
         controlledLoad: "controlledload",
         energyConcession: "energyconcession",
