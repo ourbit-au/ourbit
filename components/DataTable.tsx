@@ -96,7 +96,7 @@ export const columns: ColumnDef<EnergyOffer>[] = [
     accessorKey: "tariffType",
     header: () => <div className="text-right">Tariff Type</div>,
     cell: ({ row }) => {
-      const tariffType = row.getValue("tariffType");
+      const tariffType = row.getValue("tariffType") as string;
       return <div className="text-right font-medium">{tariffType}</div>;
     },
   },

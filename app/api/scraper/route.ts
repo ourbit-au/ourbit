@@ -6,6 +6,43 @@ import { v4 as uuidv4 } from "uuid";
 const sleep = (ms: number | undefined) =>
   new Promise((resolve) => setTimeout(resolve, ms));
 
+async function forceClick(page: any, selector: string) {
+  const elementHandle = await page.$(selector);
+  if (!elementHandle) {
+    console.error(`${selector} not found in the DOM`);
+    return;
+  }
+
+  const isVisible = await page.evaluate((selector: string) => {
+    const element = document.querySelector(selector);
+    if (!element) return false;
+    const style = window.getComputedStyle(element);
+    return (
+      style &&
+      style.display !== "none" &&
+      style.visibility !== "hidden" &&
+      style.opacity !== "0"
+    );
+  }, selector);
+
+  if (!isVisible) {
+    await page.evaluate((selector: string) => {
+      const element = document.querySelector(selector);
+      if (element) {
+        (element as HTMLElement).click();
+      }
+    }, selector);
+  } else {
+    await page.evaluate((selector: string) => {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.scrollIntoView();
+        (element as HTMLElement).click();
+      }
+    }, selector);
+  }
+}
+
 export async function GET(request: Request) {
   console.log("GET request received");
   const supabase = createClient();
@@ -144,66 +181,69 @@ export async function GET(request: Request) {
     });
 
     try {
-      async function forceClick(selector: string) {
-        const elementHandle = await page.$(selector);
-        if (!elementHandle) {
-          console.error(`${selector} not found in the DOM`);
-          return;
-        }
+      // async function forceClick(selector: string) {
+      //   const elementHandle = await page.$(selector);
+      //   if (!elementHandle) {
+      //     console.error(`${selector} not found in the DOM`);
+      //     return;
+      //   }
 
-        const isVisible = await page.evaluate((selector) => {
-          const element = document.querySelector(selector);
-          if (!element) return false;
-          const style = window.getComputedStyle(element);
-          return (
-            style &&
-            style.display !== "none" &&
-            style.visibility !== "hidden" &&
-            style.opacity !== "0"
-          );
-        }, selector);
+      //   const isVisible = await page.evaluate((selector) => {
+      //     const element = document.querySelector(selector);
+      //     if (!element) return false;
+      //     const style = window.getComputedStyle(element);
+      //     return (
+      //       style &&
+      //       style.display !== "none" &&
+      //       style.visibility !== "hidden" &&
+      //       style.opacity !== "0"
+      //     );
+      //   }, selector);
 
-        if (!isVisible) {
-          await page.evaluate((selector) => {
-            const element = document.querySelector(selector);
-            if (element) {
-              (element as HTMLElement).click();
-            }
-          }, selector);
-        } else {
-          await page.evaluate((selector) => {
-            const element = document.querySelector(selector);
-            if (element) {
-              element.scrollIntoView();
-              (element as HTMLElement).click();
-            }
-          }, selector);
-        }
-      }
+      //   if (!isVisible) {
+      //     await page.evaluate((selector) => {
+      //       const element = document.querySelector(selector);
+      //       if (element) {
+      //         (element as HTMLElement).click();
+      //       }
+      //     }, selector);
+      //   } else {
+      //     await page.evaluate((selector) => {
+      //       const element = document.querySelector(selector);
+      //       if (element) {
+      //         element.scrollIntoView();
+      //         (element as HTMLElement).click();
+      //       }
+      //     }, selector);
+      //   }
+      // }
 
-      await forceClick(`#${config.comparison}`);
-      await forceClick(`input#customer_${config.where}`);
-      await forceClick("input#moving");
+      await forceClick(page, `#${config.comparison}`);
+      await forceClick(page, `input#customer_${config.where}`);
+      await forceClick(page, "input#moving");
       await page.type("input#postcode", config.postcode);
 
       await page.waitForSelector('input[value="Submit postcode"]', {
         visible: true,
       });
-      await forceClick('input[value="Submit postcode"]');
+      await forceClick(page, 'input[value="Submit postcode"]');
       await sleep(2000);
 
       await forceClick(
+        page,
         `#concession${config.energyConcession === "yes" ? "Yes" : "No"}`
       );
       await forceClick(
+        page,
         `#concession${config.energyConcession === "yes" ? "Yes" : "No"}`
       );
 
       await forceClick(
+        page,
         `input#solar${config.solarPanels === "yes" ? "Yes" : "No"}`
       );
-      await forceClick("input#disclaimer");
-      await forceClick('button[name="next"]');
+      await forceClick(page, "input#disclaimer");
+      await forceClick(page, 'button[name="next"]');
 
       await page.waitForSelector('select[formcontrolname="hhSize"]', {
         visible: true,
@@ -227,22 +267,23 @@ export async function GET(request: Request) {
       );
 
       if (config.heatingHome === "None") {
-        await forceClick("input#spaceHeatingNone");
+        await forceClick(page, "input#spaceHeatingNone");
       } else {
         for (const heatingType of config.heatingHome) {
-          await forceClick(`input#${heatingType.replace(/ /g, "")}`);
+          await forceClick(page, `input#${heatingType.replace(/ /g, "")}`);
         }
       }
 
       if (config.coolingHome === "None") {
-        await forceClick("input#spaceCoolingNone");
+        await forceClick(page, "input#spaceCoolingNone");
       } else {
         for (const coolingType of config.coolingHome) {
-          await forceClick(`input#${coolingType.replace(/ /g, "")}`);
+          await forceClick(page, `input#${coolingType.replace(/ /g, "")}`);
         }
       }
 
       await forceClick(
+        page,
         `input#clothesDryer${config.dryer === "yes" ? "Yes" : "No"}`
       );
       if (config.dryer === "yes") {
@@ -253,12 +294,14 @@ export async function GET(request: Request) {
       }
 
       await forceClick(
+        page,
         `input#waterHeating${config.hotWaterSystem.replace(/ /g, "")}`
       );
       await forceClick(
+        page,
         `input#controlledLoad${config.controlledLoad === "yes" ? "Yes" : "No"}`
       );
-      await forceClick('button[type="submit"]');
+      await forceClick(page, 'button[type="submit"]');
 
       await page.waitForNavigation();
 
