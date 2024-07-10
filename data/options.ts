@@ -1,3 +1,8 @@
+const yesNo = [
+  { value: "yes", label: "Yes" },
+  { value: "no", label: "No" },
+];
+
 const comparisonOptions = [
   { value: "electricity", label: "Electricity" },
   { value: "gas", label: "Gas" },
@@ -14,16 +19,6 @@ const distributorOptions = [
   { value: "AusNet Services", label: "AusNet Services" },
   { value: "Powercor", label: "Powercor" },
   { value: "United Energy", label: "United Energy" },
-];
-
-const energyConcessionOptions = [
-  { value: "yes", label: "Yes" },
-  { value: "no", label: "No" },
-];
-
-const solarPanelsOptions = [
-  { value: "yes", label: "Yes" },
-  { value: "no", label: "No" },
 ];
 
 const peopleInHomeOptions = [
@@ -47,11 +42,6 @@ const fridgesOptions = [
   { value: "3+", label: "3 or more" },
 ];
 
-const gasConnectionOptions = [
-  { value: "yes", label: "Yes" },
-  { value: "no", label: "No" },
-];
-
 const heatingHomeOptions = [
   { value: "None", label: "None" },
   { value: "Electric", label: "Electric" },
@@ -64,11 +54,6 @@ const coolingHomeOptions = [
   { value: "Air Conditioning", label: "Air Conditioning" },
   { value: "Fans", label: "Fans" },
   { value: "Other", label: "Other" },
-];
-
-const dryerOptions = [
-  { value: "yes", label: "Yes" },
-  { value: "no", label: "No" },
 ];
 
 const dryerUsageOptions = [
@@ -85,21 +70,11 @@ const hotWaterSystemOptions = [
   { value: "Heat Pump", label: "Heat Pump" },
 ];
 
-const controlledLoadOptions = [
-  { value: "yes", label: "Yes" },
-  { value: "no", label: "No" },
-];
-
 const seaDistanceOptions = [
   { value: "don't know", label: "Don't know" },
   { value: "less than 1km", label: "Less than 1km" },
   { value: "1-10km", label: "1-10km" },
   { value: "more than 10km", label: "More than 10km" },
-];
-
-const washingMachineOptions = [
-  { value: "yes", label: "Yes" },
-  { value: "no", label: "No" },
 ];
 
 const washingMachineUsageOptions = [
@@ -112,20 +87,14 @@ const washingMachineUsageOptions = [
 export {
   comparisonOptions,
   locationOptions,
-  distributorOptions,
-  energyConcessionOptions,
-  solarPanelsOptions,
   peopleInHomeOptions,
   roomsInHomeOptions,
   fridgesOptions,
-  gasConnectionOptions,
   heatingHomeOptions,
   coolingHomeOptions,
-  dryerOptions,
   dryerUsageOptions,
   hotWaterSystemOptions,
-  controlledLoadOptions,
   seaDistanceOptions,
-  washingMachineOptions,
   washingMachineUsageOptions,
+  yesNo,
 };
