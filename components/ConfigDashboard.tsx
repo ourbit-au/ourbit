@@ -26,42 +26,42 @@ import {
   washingMachineUsageOptions,
   yesNo,
 } from "@/data/options";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type DistributionMap = {
   [postcode: string]: string[];
 };
 
+//new function for a more human readable config id
+//it uses the first letter of each config option to generate a unique id
+//e.g EHB3000CIY4-8GHNED0EY2-3
+function generateConfigId(config: Record<string, string>) {
+  const parts = [
+    config.comparison.charAt(0).toUpperCase(), // E or G
+    config.where.charAt(0).toUpperCase(), // H or B
+    config.postcode,
+    config.distributor.substring(0, 2).toUpperCase(),
+    config.energyConcession.charAt(0).toUpperCase(), // Y or N
+    config.solarPanels.charAt(0).toUpperCase(), // Y or N
+    config.peopleInHome,
+    config.roomsInHome.replace("-", ""),
+    config.fridges.charAt(0),
+    config.gasConnection.charAt(0).toUpperCase(), // Y or N
+    config.heatingHome.charAt(0).toUpperCase(),
+    config.coolingHome.substring(0, 2).toUpperCase(),
+    config.dryer.charAt(0).toUpperCase(), // Y or N
+    config.dryerUsage.charAt(0),
+    config.hotWaterSystem.charAt(0).toUpperCase(),
+    config.controlledLoad.charAt(0).toUpperCase(), // Y or N
+    config.seaDistance.substring(0, 2).toUpperCase(),
+    config.washingMachine.charAt(0).toUpperCase(), // Y or N
+    config.washingMachineUsage.charAt(0),
+  ];
+
+  return parts.join("");
+}
+
 const ConfigDashboard = () => {
-  //new function for a more human readable config id
-  //it uses the first letter of each config option to generate a unique id
-  //e.g EHB3000CIY4-8GHNED0EY2-3
-  function generateConfigId(config) {
-    const parts = [
-      config.comparison.charAt(0).toUpperCase(), // E or G
-      config.where.charAt(0).toUpperCase(), // H or B
-      config.postcode,
-      config.distributor.substring(0, 2).toUpperCase(),
-      config.energyConcession.charAt(0).toUpperCase(), // Y or N
-      config.solarPanels.charAt(0).toUpperCase(), // Y or N
-      config.peopleInHome,
-      config.roomsInHome.replace("-", ""),
-      config.fridges.charAt(0),
-      config.gasConnection.charAt(0).toUpperCase(), // Y or N
-      config.heatingHome.charAt(0).toUpperCase(),
-      config.coolingHome.substring(0, 2).toUpperCase(),
-      config.dryer.charAt(0).toUpperCase(), // Y or N
-      config.dryerUsage.charAt(0),
-      config.hotWaterSystem.charAt(0).toUpperCase(),
-      config.controlledLoad.charAt(0).toUpperCase(), // Y or N
-      config.seaDistance.substring(0, 2).toUpperCase(),
-      config.washingMachine.charAt(0).toUpperCase(), // Y or N
-      config.washingMachineUsage.charAt(0),
-    ];
-
-    return parts.join("");
-  }
-
   const [config, setConfig] = useState({
     comparison: "electricity",
     where: "home",
@@ -83,9 +83,8 @@ const ConfigDashboard = () => {
     washingMachine: "yes",
     washingMachineUsage: "2-3",
   });
-
   const [saveStatus, setSaveStatus] = useState(null);
-
+  const [existingConfig, setExistingConfig] = useState(null);
   const [availableDistributors, setAvailableDistributors] = useState([]);
 
   const handlePostcodeChange = (e) => {
@@ -126,6 +125,21 @@ const ConfigDashboard = () => {
     }));
   };
 
+  const checkExistingConfig = async (configId: string) => {
+    try {
+      const response = await fetch(`/api/configuration?configid=${configId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setExistingConfig(data);
+      } else {
+        setExistingConfig(null);
+      }
+    } catch (error) {
+      console.error("Error checking existing configuration:", error);
+      setExistingConfig(null);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaveStatus("saving");
@@ -149,6 +163,11 @@ const ConfigDashboard = () => {
       setSaveStatus("error");
     }
   };
+
+  useEffect(() => {
+    const configId = generateConfigId(config);
+    checkExistingConfig(configId);
+  }, [config]);
 
   const FormField = ({
     label,
