@@ -12,8 +12,62 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  comparisonOptions,
+  locationOptions,
+  distributorOptions,
+  energyConcessionOptions,
+  solarPanelsOptions,
+  peopleInHomeOptions,
+  roomsInHomeOptions,
+  fridgesOptions,
+  gasConnectionOptions,
+  heatingHomeOptions,
+  coolingHomeOptions,
+  dryerOptions,
+  dryerUsageOptions,
+  hotWaterSystemOptions,
+  controlledLoadOptions,
+  seaDistanceOptions,
+  washingMachineOptions,
+  washingMachineUsageOptions,
+} from "@/data/options";
+import distributionMap from "@/data/distributionMap.json";
+
+type DistributionMap = {
+  [postcode: string]: string[];
+};
 
 const ConfigDashboard = () => {
+  //new function for a more human readable config id
+  //it uses the first letter of each config option to generate a unique id
+  //e.g EHB3000CIY4-8GHNED0EY2-3
+  function generateConfigId(config) {
+    const parts = [
+      config.comparison.charAt(0).toUpperCase(), // E or G
+      config.where.charAt(0).toUpperCase(), // H or B
+      config.postcode,
+      config.distributor.substring(0, 2).toUpperCase(),
+      config.energyConcession.charAt(0).toUpperCase(), // Y or N
+      config.solarPanels.charAt(0).toUpperCase(), // Y or N
+      config.peopleInHome,
+      config.roomsInHome.replace("-", ""),
+      config.fridges.charAt(0),
+      config.gasConnection.charAt(0).toUpperCase(), // Y or N
+      config.heatingHome.charAt(0).toUpperCase(),
+      config.coolingHome.substring(0, 2).toUpperCase(),
+      config.dryer.charAt(0).toUpperCase(), // Y or N
+      config.dryerUsage.charAt(0),
+      config.hotWaterSystem.charAt(0).toUpperCase(),
+      config.controlledLoad.charAt(0).toUpperCase(), // Y or N
+      config.seaDistance.substring(0, 2).toUpperCase(),
+      config.washingMachine.charAt(0).toUpperCase(), // Y or N
+      config.washingMachineUsage.charAt(0),
+    ];
+
+    return parts.join("");
+  }
+
   const [config, setConfig] = useState({
     comparison: "electricity",
     where: "home",
@@ -38,6 +92,31 @@ const ConfigDashboard = () => {
 
   const [saveStatus, setSaveStatus] = useState(null);
 
+  const [availableDistributors, setAvailableDistributors] = useState([]);
+
+  const handlePostcodeChange = (e) => {
+    const postcode = e.target.value;
+    setConfig((prevConfig) => ({
+      ...prevConfig,
+      postcode: postcode,
+    }));
+
+    const distributors = distributionMap[postcode] || [];
+    setAvailableDistributors(distributors);
+
+    if (distributors.length === 1) {
+      setConfig((prevConfig) => ({
+        ...prevConfig,
+        distributor: distributors[0],
+      }));
+    } else {
+      setConfig((prevConfig) => ({
+        ...prevConfig,
+        distributor: "",
+      }));
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setConfig((prevConfig) => ({
@@ -57,11 +136,12 @@ const ConfigDashboard = () => {
     e.preventDefault();
     setSaveStatus("saving");
 
+    const configId = generateConfigId(config);
+
     try {
-      //POST api/configuration
       const response = await fetch("/api/configuration", {
         method: "POST",
-        body: JSON.stringify(config),
+        body: JSON.stringify({ ...config, configid: configId }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -76,7 +156,13 @@ const ConfigDashboard = () => {
     }
   };
 
-  const FormField = ({ label, name, type = "text", options = [] }) => (
+  const FormField = ({
+    label,
+    name,
+    type = "text",
+    onChange,
+    options = [],
+  }) => (
     <div className="space-y-2">
       <Label htmlFor={name}>{label}</Label>
       {type === "radio" ? (
@@ -102,7 +188,7 @@ const ConfigDashboard = () => {
           name={name}
           type={type}
           value={config[name]}
-          onChange={handleInputChange}
+          onChange={onChange || handleInputChange}
           className="w-full"
         />
       )}
@@ -135,8 +221,23 @@ const ConfigDashboard = () => {
                 { value: "business", label: "Business" },
               ]}
             />
-            <FormField label="Postcode" name="postcode" type="text" />
-            <FormField label="Distributor" name="distributor" type="text" />
+            <FormField
+              label="Postcode"
+              name="postcode"
+              type="text"
+              onChange={handlePostcodeChange}
+            />
+            {availableDistributors.length > 1 && (
+              <FormField
+                label="Distributor"
+                name="distributor"
+                type="radio"
+                options={availableDistributors.map((dist) => ({
+                  value: dist,
+                  label: dist,
+                }))}
+              />
+            )}
             <FormField
               label="Energy Concession"
               name="energyConcession"

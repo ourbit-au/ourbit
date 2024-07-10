@@ -1,0 +1,702 @@
+Energy Fact Sheet Guidelines - Postcode to Climate & Distribution Zone Mapping,,,,
+,,,,
+The following spreadsheet contains each serviced electricity distribution postcode mapped to the relevant climate and distribution zone,,,,
+,,,,
+Spreadsheet updated on 11th of June 2019,,,,
+,,,,
+Postcode ,Distributor 1,Distributor 2,Distributor 3,Climate Zone
+3000,CitiPower,,,6
+3002,CitiPower,,,6
+3003,CitiPower,,,6
+3004,CitiPower,,,6
+3006,CitiPower,,,6
+3008,CitiPower,,,6
+3011,CitiPower,Jemena,,6
+3012,Powercor,Jemena,,6
+3013,Powercor,Jemena,,6
+3015,CitiPower,Powercor,Jemena,6
+3016,Powercor,Jemena,,6
+3018,Powercor,,,6
+3019,Powercor,Jemena,,6
+3020,Powercor,Jemena,,6
+3021,Powercor,,,6
+3022,Powercor,,,6
+3023,Powercor,Jemena,,6
+3024,Powercor,,,6
+3025,Powercor,Jemena,,6
+3026,Powercor,,,6
+3027,Powercor,,,6
+3028,Powercor,,,6
+3029,Powercor,,,6
+3030,Powercor,,,6
+3031,CitiPower,Jemena,,6
+3032,CitiPower,Jemena,,6
+3033,Powercor,Jemena,,6
+3034,Powercor,Jemena,,6
+3036,Powercor,Jemena,,6
+3037,Powercor,Jemena,,6
+3038,Powercor,Jemena,,6
+3039,CitiPower,Jemena,,6
+3040,CitiPower,Jemena,,6
+3041,Jemena,,,6
+3042,Powercor,Jemena,,6
+3043,Jemena,,,6
+3044,CitiPower,Jemena,,6
+3045,Jemena,,,6
+3046,Jemena,,,6
+3047,Jemena,,,6
+3048,Jemena,,,6
+3049,Jemena,,,6
+3051,CitiPower,Jemena,,6
+3052,CitiPower,Jemena,,6
+3053,CitiPower,,,6
+3054,CitiPower,,,6
+3055,CitiPower,,,6
+3056,CitiPower,,,6
+3057,CitiPower,,,6
+3058,CitiPower,Jemena,,6
+3059,Jemena,,,6
+3060,Jemena,,,6
+3061,Jemena,AusNet,,6
+3062,Jemena,AusNet,,6
+3063,Jemena,,,6
+3064,Powercor,Jemena,AusNet,6
+3065,CitiPower,,,6
+3066,CitiPower,,,6
+3067,CitiPower,,,6
+3068,CitiPower,Jemena,,6
+3070,CitiPower,Jemena,,6
+3071,CitiPower,,,6
+3072,CitiPower,Jemena,,6
+3073,Jemena,AusNet,,6
+3074,Jemena,AusNet,,6
+3075,AusNet,,,6
+3076,Jemena,AusNet,,6
+3078,CitiPower,Jemena,,6
+3079,CitiPower,United Energy,Jemena,6
+3081,Jemena,,,6
+3082,AusNet,,,6
+3083,Jemena,AusNet,,6
+3084,United Energy,Jemena,AusNet,6
+3085,Jemena,AusNet,,6
+3086,Jemena,,,6
+3087,Jemena,AusNet,,6
+3088,AusNet,,,6
+3089,AusNet,,,6
+3090,AusNet,,,6
+3091,AusNet,,,6
+3093,United Energy,AusNet,,6
+3094,AusNet,,,6
+3095,AusNet,,,6
+3096,AusNet,,,6
+3097,AusNet,,,6
+3099,AusNet,,,6
+3101,CitiPower,,,6
+3102,CitiPower,,,6
+3103,CitiPower,United Energy,,6
+3104,CitiPower,United Energy,,6
+3105,CitiPower,United Energy,,6
+3106,United Energy,AusNet,,6
+3107,United Energy,,,6
+3108,CitiPower,United Energy,,6
+3109,United Energy,AusNet,,6
+3111,United Energy,AusNet,,6
+3113,United Energy,AusNet,,6
+3114,United Energy,AusNet,,6
+3115,AusNet,,,6
+3116,AusNet,,,7
+3121,CitiPower,,,6
+3122,CitiPower,United Energy,,6
+3123,CitiPower,United Energy,,6
+3124,CitiPower,United Energy,,6
+3125,CitiPower,United Energy,,6
+3126,CitiPower,,,6
+3127,CitiPower,United Energy,,6
+3128,United Energy,,,6
+3129,CitiPower,United Energy,,6
+3130,United Energy,,,6
+3131,United Energy,,,6
+3132,United Energy,AusNet,,6
+3133,United Energy,AusNet,,6
+3134,United Energy,AusNet,,6
+3135,AusNet,,,6
+3136,AusNet,,,6
+3137,AusNet,,,6
+3138,AusNet,,,7
+3139,AusNet,,,6
+3140,AusNet,,,7
+3141,CitiPower,,,6
+3142,CitiPower,,,6
+3143,CitiPower,,,6
+3144,CitiPower,United Energy,,6
+3145,United Energy,,,6
+3146,United Energy,,,6
+3147,United Energy,,,6
+3148,United Energy,,,6
+3149,United Energy,,,6
+3150,United Energy,,,6
+3151,United Energy,,,6
+3152,United Energy,AusNet,,6
+3153,AusNet,,,6
+3154,AusNet,,,6
+3155,AusNet,,,6
+3156,United Energy,AusNet,,6
+3158,AusNet,,,7
+3159,AusNet,,,7
+3160,AusNet,,,7
+3161,CitiPower,United Energy,,6
+3162,United Energy,,,6
+3163,United Energy,,,6
+3165,United Energy,,,6
+3166,United Energy,,,6
+3167,United Energy,,,6
+3168,United Energy,,,6
+3169,United Energy,,,6
+3170,United Energy,,,6
+3171,United Energy,,,6
+3172,United Energy,,,6
+3173,United Energy,,,6
+3174,United Energy,,,6
+3175,United Energy,AusNet,,6
+3177,United Energy,,,6
+3178,United Energy,AusNet,,6
+3179,United Energy,AusNet,,6
+3180,United Energy,AusNet,,6
+3181,CitiPower,,,6
+3182,CitiPower,United Energy,,6
+3183,CitiPower,United Energy,,6
+3184,United Energy,,,6
+3185,United Energy,,,6
+3186,United Energy,,,6
+3187,United Energy,,,6
+3188,United Energy,,,6
+3189,United Energy,,,6
+3190,United Energy,,,6
+3191,United Energy,,,6
+3192,United Energy,,,6
+3193,United Energy,,,6
+3194,United Energy,,,6
+3195,United Energy,,,6
+3196,United Energy,,,6
+3197,United Energy,,,6
+3198,United Energy,,,6
+3199,United Energy,,,6
+3200,United Energy,,,6
+3201,United Energy,,,6
+3202,United Energy,,,6
+3204,United Energy,,,6
+3205,CitiPower,,,6
+3206,CitiPower,,,6
+3207,CitiPower,Jemena,,6
+3211,Powercor,,,6
+3212,Powercor,,,6
+3213,Powercor,,,6
+3214,Powercor,,,6
+3215,Powercor,,,6
+3216,Powercor,,,6
+3217,Powercor,,,6
+3218,Powercor,,,6
+3219,Powercor,,,6
+3220,Powercor,,,6
+3221,Powercor,,,6
+3222,Powercor,,,6
+3223,Powercor,,,6
+3224,Powercor,,,6
+3225,Powercor,,,6
+3226,Powercor,,,6
+3227,Powercor,,,6
+3228,Powercor,,,6
+3230,Powercor,,,6
+3231,Powercor,,,6
+3232,Powercor,,,6
+3233,Powercor,,,6
+3234,Powercor,,,6
+3235,Powercor,,,6
+3236,Powercor,,,6
+3237,Powercor,,,6
+3238,Powercor,,,6
+3239,Powercor,,,6
+3240,Powercor,,,6
+3241,Powercor,,,6
+3242,Powercor,,,6
+3243,Powercor,,,6
+3249,Powercor,,,6
+3250,Powercor,,,6
+3251,Powercor,,,6
+3254,Powercor,,,6
+3260,Powercor,,,6
+3264,Powercor,,,6
+3265,Powercor,,,6
+3266,Powercor,,,6
+3267,Powercor,,,6
+3268,Powercor,,,6
+3269,Powercor,,,6
+3270,Powercor,,,6
+3271,Powercor,,,7
+3272,Powercor,,,7
+3273,Powercor,,,6
+3274,Powercor,,,6
+3275,Powercor,,,6
+3276,Powercor,,,6
+3277,Powercor,,,6
+3278,Powercor,,,6
+3279,Powercor,,,6
+3280,Powercor,,,6
+3281,Powercor,,,6
+3282,Powercor,,,6
+3283,Powercor,,,6
+3284,Powercor,,,6
+3285,Powercor,,,6
+3286,Powercor,,,6
+3287,Powercor,,,6
+3289,Powercor,,,6
+3292,Powercor,,,6
+3293,Powercor,,,7
+3294,Powercor,,,7
+3300,Powercor,,,7
+3301,Powercor,,,6
+3302,Powercor,,,6
+3303,Powercor,,,6
+3304,Powercor,,,6
+3305,Powercor,,,6
+3309,Powercor,,,6
+3310,Powercor,,,6
+3311,Powercor,,,6
+3312,Powercor,,,6
+3314,Powercor,,,7
+3315,Powercor,,,6
+3317,Powercor,,,7
+3318,Powercor,,,6
+3319,Powercor,,,6
+3321,Powercor,,,6
+3322,Powercor,,,6
+3323,Powercor,,,6
+3324,Powercor,,,6
+3325,Powercor,,,7
+3328,Powercor,,,6
+3329,Powercor,,,6
+3330,Powercor,,,6
+3331,Powercor,,,6
+3332,Powercor,,,6
+3333,Powercor,,,6
+3334,Powercor,,,6
+3335,Powercor,Jemena,,6
+3336,Powercor,Jemena,,6
+3337,Powercor,Jemena,,6
+3338,Powercor,,,6
+3340,Powercor,Jemena,,6
+3341,Powercor,,,6
+3342,Powercor,,,6
+3345,Powercor,,,6
+3350,Powercor,,,7
+3351,Powercor,,,7
+3352,Powercor,,,7
+3355,Powercor,,,7
+3356,Powercor,,,7
+3357,Powercor,,,7
+3358,Powercor,,,7
+3360,Powercor,,,7
+3361,Powercor,,,7
+3363,Powercor,,,7
+3364,Powercor,,,7
+3370,Powercor,,,7
+3371,Powercor,,,7
+3373,Powercor,,,7
+3374,Powercor,,,7
+3375,Powercor,,,7
+3377,Powercor,,,7
+3378,Powercor,,,7
+3379,Powercor,,,7
+3380,Powercor,,,6
+3381,Powercor,,,7
+3384,Powercor,,,7
+3385,Powercor,,,6
+3387,Powercor,,,6
+3388,Powercor,,,6
+3390,Powercor,,,6
+3391,Powercor,,,4
+3392,Powercor,,,4
+3393,Powercor,,,4
+3395,Powercor,,,4
+3396,Powercor,,,4
+3400,Powercor,,,6
+3401,Powercor,,,6
+3407,Powercor,,,7
+3409,Powercor,,,6
+3412,Powercor,,,6
+3413,Powercor,,,6
+3414,Powercor,,,4
+3415,Powercor,,,4
+3418,Powercor,,,4
+3419,Powercor,,,4
+3420,Powercor,,,4
+3423,Powercor,,,4
+3424,Powercor,,,4
+3427,Powercor,Jemena,,6
+3428,Jemena,,,6
+3429,Powercor,Jemena,,6
+3430,Powercor,Jemena,,6
+3431,Powercor,Jemena,,6
+3432,Powercor,,,7
+3433,Powercor,,,7
+3434,Powercor,AusNet,,7
+3435,Powercor,,,7
+3437,Powercor,Jemena,,6
+3438,Powercor,,,7
+3440,Powercor,,,7
+3441,Powercor,,,7
+3442,Powercor,,,7
+3444,Powercor,,,6
+3446,Powercor,,,7
+3447,Powercor,,,7
+3448,Powercor,,,7
+3450,Powercor,,,7
+3451,Powercor,,,7
+3453,Powercor,,,6
+3458,Powercor,,,6
+3460,Powercor,,,7
+3461,Powercor,,,7
+3462,Powercor,,,7
+3463,Powercor,,,6
+3464,Powercor,,,6
+3465,Powercor,,,7
+3467,Powercor,,,7
+3468,Powercor,,,7
+3469,Powercor,,,7
+3472,Powercor,,,7
+3475,Powercor,,,6
+3477,Powercor,,,7
+3478,Powercor,,,7
+3480,Powercor,,,4
+3482,Powercor,,,4
+3483,Powercor,,,4
+3485,Powercor,,,4
+3487,Powercor,,,4
+3488,Powercor,,,4
+3489,Powercor,,,4
+3490,Powercor,,,4
+3491,Powercor,,,4
+3494,Powercor,,,4
+3496,Powercor,,,4
+3498,Powercor,,,4
+3500,Powercor,,,4
+3501,Powercor,,,4
+3505,Powercor,,,4
+3506,Powercor,,,4
+3507,Powercor,,,4
+3509,Powercor,,,4
+3512,Powercor,,,4
+3515,Powercor,,,6
+3516,Powercor,,,6
+3517,Powercor,,,6
+3518,Powercor,,,4
+3520,Powercor,,,6
+3521,Powercor,AusNet,,6
+3522,Powercor,AusNet,,6
+3523,Powercor,,,6
+3525,Powercor,,,4
+3527,Powercor,,,4
+3529,Powercor,,,4
+3530,Powercor,,,4
+3531,Powercor,,,4
+3533,Powercor,,,4
+3537,Powercor,,,6
+3540,Powercor,,,4
+3542,Powercor,,,4
+3544,Powercor,,,4
+3546,Powercor,,,4
+3549,Powercor,,,4
+3550,Powercor,,,6
+3551,Powercor,,,6
+3555,Powercor,,,6
+3556,Powercor,,,6
+3557,Powercor,,,6
+3558,Powercor,,,6
+3559,Powercor,,,6
+3561,Powercor,,,4
+3562,Powercor,,,4
+3563,Powercor,,,4
+3564,Powercor,,,4
+3565,Powercor,,,4
+3566,Powercor,,,4
+3567,Powercor,,,4
+3568,Powercor,,,4
+3570,Powercor,,,6
+3571,Powercor,,,6
+3572,Powercor,,,4
+3573,Powercor,,,4
+3575,Powercor,,,6
+3576,Powercor,,,6
+3579,Powercor,,,4
+3580,Powercor,,,4
+3581,Powercor,,,4
+3583,Powercor,,,4
+3584,Powercor,,,4
+3585,Powercor,,,4
+3586,Powercor,,,4
+3588,Powercor,,,4
+3589,Powercor,,,4
+3590,Powercor,,,4
+3591,Powercor,,,4
+3594,Powercor,,,4
+3595,Powercor,,,4
+3596,Powercor,,,4
+3597,Powercor,,,4
+3599,Powercor,,,4
+3607,AusNet,,,6
+3608,Powercor,AusNet,,6
+3610,Powercor,AusNet,,6
+3612,Powercor,AusNet,,6
+3614,Powercor,,,4
+3616,Powercor,,,4
+3617,Powercor,,,4
+3618,Powercor,,,4
+3620,Powercor,,,4
+3621,Powercor,,,4
+3622,Powercor,,,4
+3623,Powercor,,,4
+3624,Powercor,,,4
+3629,Powercor,,,4
+3630,Powercor,,,4
+3631,Powercor,AusNet,,6
+3633,Powercor,,,4
+3634,Powercor,,,4
+3635,Powercor,,,4
+3636,Powercor,,,4
+3637,Powercor,,,4
+3638,Powercor,,,4
+3639,Powercor,,,4
+3640,Powercor,,,4
+3641,Powercor,,,4
+3644,Powercor,,,4
+3646,Powercor,AusNet,,6
+3647,Powercor,,,4
+3649,Powercor,,,4
+3658,AusNet,,,6
+3659,AusNet,,,6
+3660,AusNet,,,6
+3662,Powercor,AusNet,,6
+3663,AusNet,,,6
+3664,AusNet,,,6
+3665,AusNet,,,6
+3666,Powercor,AusNet,,7
+3669,Powercor,AusNet,,6
+3670,AusNet,,,6
+3672,AusNet,,,6
+3673,AusNet,,,6
+3675,AusNet,,,6
+3677,AusNet,,,7
+3678,AusNet,,,7
+3682,AusNet,,,6
+3683,AusNet,,,6
+3685,Powercor,AusNet,,6
+3687,AusNet,,,6
+3688,AusNet,,,6
+3690,AusNet,,,6
+3691,AusNet,,,7
+3695,AusNet,,,6
+3697,AusNet,,,7
+3698,AusNet,,,7
+3699,AusNet,,,7
+3700,AusNet,,,7
+3701,AusNet,,,6
+3704,AusNet,,,7
+3705,AusNet,,,7
+3707,AusNet,,,7
+3708,AusNet,,,7
+3709,AusNet,,,7
+3711,AusNet,,,7
+3712,AusNet,,,7
+3713,AusNet,,,7
+3714,AusNet,,,7
+3715,AusNet,,,7
+3717,AusNet,,,7
+3718,AusNet,,,7
+3719,AusNet,,,7
+3720,AusNet,,,7
+3722,AusNet,,,7
+3723,AusNet,,,6
+3725,Powercor,AusNet,,6
+3726,AusNet,,,6
+3727,Powercor,AusNet,,7
+3728,Powercor,AusNet,,7
+3730,Powercor,AusNet,,7
+3732,AusNet,,,7
+3733,AusNet,,,7
+3735,AusNet,,,7
+3737,AusNet,,,7
+3738,AusNet,,,7
+3739,AusNet,,,7
+3740,AusNet,,,7
+3741,AusNet,,,7
+3744,AusNet,,,7
+3746,AusNet,,,7
+3747,AusNet,,,6
+3749,AusNet,,,6
+3750,Jemena,AusNet,,6
+3751,AusNet,,,6
+3752,AusNet,,,6
+3753,Powercor,Jemena,AusNet,6
+3754,AusNet,,,6
+3755,AusNet,,,6
+3756,Powercor,AusNet,,7
+3757,AusNet,,,7
+3758,AusNet,,,6
+3759,AusNet,,,6
+3760,AusNet,,,6
+3761,AusNet,,,6
+3762,Powercor,AusNet,,7
+3763,AusNet,,,7
+3764,Powercor,AusNet,,6
+3765,AusNet,,,7
+3766,AusNet,,,7
+3767,AusNet,,,7
+3770,AusNet,,,7
+3775,AusNet,,,7
+3777,AusNet,,,7
+3778,AusNet,,,7
+3779,AusNet,,,7
+3781,AusNet,,,6
+3782,AusNet,,,6
+3783,AusNet,,,6
+3785,AusNet,,,7
+3786,AusNet,,,7
+3787,AusNet,,,6
+3788,AusNet,,,7
+3789,AusNet,,,7
+3791,AusNet,,,7
+3792,AusNet,,,7
+3793,AusNet,,,7
+3795,AusNet,,,7
+3796,AusNet,,,7
+3797,AusNet,,,7
+3799,AusNet,,,7
+3802,United Energy,AusNet,,6
+3803,United Energy,AusNet,,6
+3804,United Energy,AusNet,,6
+3805,AusNet,,,6
+3806,AusNet,,,6
+3807,AusNet,,,6
+3808,AusNet,,,6
+3809,AusNet,,,6
+3810,AusNet,,,6
+3812,AusNet,,,6
+3813,AusNet,,,6
+3814,AusNet,,,6
+3815,AusNet,,,6
+3816,AusNet,,,6
+3818,AusNet,,,7
+3820,AusNet,,,7
+3821,AusNet,,,7
+3822,AusNet,,,7
+3823,AusNet,,,7
+3824,AusNet,,,7
+3825,AusNet,,,6
+3831,AusNet,,,7
+3832,AusNet,,,7
+3833,AusNet,,,7
+3835,AusNet,,,6
+3840,AusNet,,,6
+3842,AusNet,,,6
+3844,AusNet,,,6
+3847,AusNet,,,6
+3850,AusNet,,,6
+3851,AusNet,,,6
+3852,AusNet,,,6
+3854,AusNet,,,6
+3856,AusNet,,,6
+3857,AusNet,,,6
+3858,AusNet,,,7
+3859,AusNet,,,6
+3860,AusNet,,,6
+3862,AusNet,,,7
+3864,AusNet,,,6
+3865,AusNet,,,6
+3869,AusNet,,,6
+3870,AusNet,,,6
+3871,AusNet,,,6
+3873,AusNet,,,6
+3874,AusNet,,,6
+3875,AusNet,,,6
+3878,AusNet,,,6
+3880,AusNet,,,6
+3882,AusNet,,,6
+3885,AusNet,,,6
+3886,AusNet,,,6
+3887,AusNet,,,6
+3888,AusNet,,,6
+3889,AusNet,,,6
+3890,AusNet,,,6
+3891,AusNet,,,6
+3892,AusNet,,,6
+3893,AusNet,,,6
+3895,AusNet,,,6
+3896,AusNet,,,6
+3898,AusNet,,,7
+3900,AusNet,,,6
+3902,AusNet,,,6
+3903,AusNet,,,6
+3904,AusNet,,,6
+3909,AusNet,,,6
+3910,United Energy,,,6
+3911,United Energy,,,6
+3912,United Energy,AusNet,,6
+3913,United Energy,,,6
+3915,United Energy,,,6
+3916,United Energy,,,6
+3918,United Energy,,,6
+3919,United Energy,,,6
+3920,United Energy,,,6
+3921,AusNet,,,6
+3922,AusNet,,,6
+3923,AusNet,,,6
+3925,AusNet,,,6
+3926,United Energy,,,6
+3927,United Energy,,,6
+3928,United Energy,,,6
+3929,United Energy,,,6
+3930,United Energy,,,6
+3931,United Energy,,,6
+3933,United Energy,,,6
+3934,United Energy,,,6
+3936,United Energy,,,6
+3937,United Energy,,,6
+3938,United Energy,,,6
+3939,United Energy,,,6
+3940,United Energy,,,6
+3941,United Energy,,,6
+3942,United Energy,,,6
+3943,United Energy,,,6
+3944,United Energy,,,6
+3945,AusNet,,,6
+3946,AusNet,,,6
+3950,AusNet,,,6
+3951,AusNet,,,6
+3953,AusNet,,,6
+3954,AusNet,,,6
+3956,AusNet,,,6
+3957,AusNet,,,6
+3958,AusNet,,,6
+3959,AusNet,,,6
+3960,AusNet,,,6
+3962,AusNet,,,6
+3964,AusNet,,,6
+3965,AusNet,,,6
+3966,AusNet,,,6
+3967,AusNet,,,6
+3971,AusNet,,,6
+3975,United Energy,AusNet,,6
+3976,United Energy,AusNet,,6
+3977,United Energy,AusNet,,6
+3978,AusNet,,,6
+3979,AusNet,,,6
+3980,AusNet,,,6
+3981,AusNet,,,6
+3984,AusNet,,,6
+3987,AusNet,,,6
+3988,AusNet,,,7
+3990,AusNet,,,6
+3991,AusNet,,,6
+3992,AusNet,,,6
+3995,AusNet,,,6
+3996,AusNet,,,6
