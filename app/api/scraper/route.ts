@@ -60,6 +60,9 @@ async function forceClick(page: any, selector: string) {
   }
 }
 
+
+//every 12 hours
+// cron(0 */12 * * *)
 export async function GET(request: Request) {
   const supabase = createClient();
 

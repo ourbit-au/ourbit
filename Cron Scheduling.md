@@ -1,4 +1,4 @@
-# Cron Guide for Vercel Scheduled Functions
+# Cron Guide for Vercel Functions
 
 ## Table of Contents
 1. [Basic Format](#basic-format)
@@ -72,7 +72,7 @@ cron(0 0 * * 0)
 - **Timezone Considerations**: Cron expressions in Vercel are based on UTC time. Adjust the UTC time specified in your cron expression to match your local timezone if needed.
 - **Multiple Schedules**: You can have multiple functions with different cron schedules in your project. Each function is independently scheduled based on its own cron expression.
 - **Testing**: Use online cron expression testers to verify your schedules before deployment. - [Cron Expression Generator & Explainer](https://crontab.guru/), [Cron Expression Tester](https://crontab.cronhub.io/)
-- **Vercel Guides**: Refer to the official Vercel documentation for more details on scheduled functions and cron jobs: [Vercel Functions](https://vercel.com/docs/functions), [Vercel Cron Jobs](https://vercel.com/docs/cron-jobs)
+- **Vercel Guides**: Refer to the official Vercel documentation for more details on scheduled functions and cron jobs: [Vercel Functions](https://vercel.com/docs/functions), [Vercel Cron Jobs](https://vercel.com/docs/cron-jobs), [Manage Cron Jobs](https://vercel.com/docs/cron-jobs/manage-cron-jobs)
 
 ## Vercel Considerations
 
