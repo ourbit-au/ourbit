@@ -60,6 +60,8 @@ async function forceClick(page: any, selector: string) {
   }
 }
 
+//every 12 hours
+// cron(0 */12 * * *)
 export async function GET(request: Request) {
   const supabase = createClient();
 
@@ -67,8 +69,9 @@ export async function GET(request: Request) {
 
   const options: ConfigOption[] = configs.data || [];
 
-  async function getServerCacheId(config: ConfigOption) {
-    const browser = await puppeteer.launch({ headless: false });
+  async function scrapeAndUpsertOffers(config: ConfigOption) {
+    //if you ever want to see the browser running to see what it's doing, the options it selects etc, change headless  to false
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
 
     await page.setViewport({ width: 1200, height: 800 });
@@ -322,15 +325,25 @@ export async function GET(request: Request) {
         offerEntries.push(offerEntry);
       });
 
+      //due to issues with the offerid not being really unique, a full refresh is the best way to go
+      const { error: deleteError } = await supabase
+        .from("offers")
+        .delete()
+        .eq("config_id", config.id);
+
+      if (deleteError) {
+        console.error("Error deleting existing offers:", deleteError);
+        return null;
+      }
+
       //changed to bulk insert because of the number of offers
-      const { data, error } = await supabase
+      const { data, error: insertError } = await supabase
         .from("offers")
         .insert(offerEntries)
         .select();
 
-      if (error) {
-        console.error("Error inserting offer:", error);
-
+      if (insertError) {
+        console.error("Error inserting new offers:", insertError);
         return null;
       }
 
@@ -346,7 +359,7 @@ export async function GET(request: Request) {
   try {
     const results = [];
     for (const config of options) {
-      const offersData = await getServerCacheId(config);
+      const offersData = await scrapeAndUpsertOffers(config);
       if (offersData === null) {
         console.log("Failed to get offersData for config:", config);
         continue;

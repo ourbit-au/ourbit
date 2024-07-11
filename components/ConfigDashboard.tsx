@@ -1,17 +1,65 @@
 "use client";
 
-import React, { useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardHeader,
   CardContent,
   CardFooter,
+  CardHeader,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import distributionMap from "@/data/distributionMap.json";
+import {
+  comparisonOptions,
+  coolingHomeOptions,
+  dryerUsageOptions,
+  fridgesOptions,
+  heatingHomeOptions,
+  hotWaterSystemOptions,
+  locationOptions,
+  peopleInHomeOptions,
+  roomsInHomeOptions,
+  seaDistanceOptions,
+  washingMachineUsageOptions,
+  yesNo,
+} from "@/data/options";
+import { useEffect, useState } from "react";
+
+type DistributionMap = {
+  [postcode: string]: string[];
+};
+
+//new function for a more human readable config id
+//it uses the first letter of each config option to generate a unique id
+//e.g EHB3000CIY4-8GHNED0EY2-3
+function generateConfigId(config: Record<string, string>) {
+  const parts = [
+    config.comparison.charAt(0).toUpperCase(), // E or G
+    config.where.charAt(0).toUpperCase(), // H or B
+    config.postcode,
+    config.distributor.substring(0, 2).toUpperCase(),
+    config.energyConcession.charAt(0).toUpperCase(), // Y or N
+    config.solarPanels.charAt(0).toUpperCase(), // Y or N
+    config.peopleInHome,
+    config.roomsInHome.replace("-", ""),
+    config.fridges.charAt(0),
+    config.gasConnection.charAt(0).toUpperCase(), // Y or N
+    config.heatingHome.charAt(0).toUpperCase(),
+    config.coolingHome.substring(0, 2).toUpperCase(),
+    config.dryer.charAt(0).toUpperCase(), // Y or N
+    config.dryerUsage.charAt(0),
+    config.hotWaterSystem.charAt(0).toUpperCase(),
+    config.controlledLoad.charAt(0).toUpperCase(), // Y or N
+    config.seaDistance.substring(0, 2).toUpperCase(),
+    config.washingMachine.charAt(0).toUpperCase(), // Y or N
+    config.washingMachineUsage.charAt(0),
+  ];
+
+  return parts.join("");
+}
 
 const ConfigDashboard = () => {
   const [config, setConfig] = useState({
@@ -35,8 +83,32 @@ const ConfigDashboard = () => {
     washingMachine: "yes",
     washingMachineUsage: "2-3",
   });
-
   const [saveStatus, setSaveStatus] = useState(null);
+  const [existingConfig, setExistingConfig] = useState(null);
+  const [availableDistributors, setAvailableDistributors] = useState([]);
+
+  const handlePostcodeChange = (e) => {
+    const postcode = e.target.value;
+    setConfig((prevConfig) => ({
+      ...prevConfig,
+      postcode: postcode,
+    }));
+
+    const distributors = distributionMap[postcode] || [];
+    setAvailableDistributors(distributors);
+
+    if (distributors.length === 1) {
+      setConfig((prevConfig) => ({
+        ...prevConfig,
+        distributor: distributors[0],
+      }));
+    } else {
+      setConfig((prevConfig) => ({
+        ...prevConfig,
+        distributor: "",
+      }));
+    }
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -53,15 +125,31 @@ const ConfigDashboard = () => {
     }));
   };
 
+  const checkExistingConfig = async (configId: string) => {
+    try {
+      const response = await fetch(`/api/configuration?configid=${configId}`);
+      if (response.ok) {
+        const data = await response.json();
+        setExistingConfig(data);
+      } else {
+        setExistingConfig(null);
+      }
+    } catch (error) {
+      console.error("Error checking existing configuration:", error);
+      setExistingConfig(null);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaveStatus("saving");
 
+    const configId = generateConfigId(config);
+
     try {
-      //POST api/configuration
       const response = await fetch("/api/configuration", {
         method: "POST",
-        body: JSON.stringify(config),
+        body: JSON.stringify({ ...config, configid: configId }),
         headers: {
           "Content-Type": "application/json",
         },
@@ -76,7 +164,18 @@ const ConfigDashboard = () => {
     }
   };
 
-  const FormField = ({ label, name, type = "text", options = [] }) => (
+  useEffect(() => {
+    const configId = generateConfigId(config);
+    checkExistingConfig(configId);
+  }, [config]);
+
+  const FormField = ({
+    label,
+    name,
+    type = "text",
+    onChange,
+    options = [],
+  }) => (
     <div className="space-y-2">
       <Label htmlFor={name}>{label}</Label>
       {type === "radio" ? (
@@ -102,7 +201,7 @@ const ConfigDashboard = () => {
           name={name}
           type={type}
           value={config[name]}
-          onChange={handleInputChange}
+          onChange={onChange || handleInputChange}
           className="w-full"
         />
       )}
@@ -121,174 +220,121 @@ const ConfigDashboard = () => {
               label="Comparison Type"
               name="comparison"
               type="radio"
-              options={[
-                { value: "electricity", label: "Electricity" },
-                { value: "gas", label: "Gas" },
-              ]}
+              options={comparisonOptions}
             />
             <FormField
               label="Location Type"
               name="where"
               type="radio"
-              options={[
-                { value: "home", label: "Home" },
-                { value: "business", label: "Business" },
-              ]}
+              options={locationOptions}
             />
-            <FormField label="Postcode" name="postcode" type="text" />
-            <FormField label="Distributor" name="distributor" type="text" />
+            <FormField
+              label="Postcode"
+              name="postcode"
+              type="text"
+              onChange={handlePostcodeChange}
+            />
+            {availableDistributors.length > 1 && (
+              <FormField
+                label="Distributor"
+                name="distributor"
+                type="radio"
+                options={availableDistributors.map((dist) => ({
+                  value: dist,
+                  label: dist,
+                }))}
+              />
+            )}
             <FormField
               label="Energy Concession"
               name="energyConcession"
               type="radio"
-              options={[
-                { value: "yes", label: "Yes" },
-                { value: "no", label: "No" },
-              ]}
+              options={yesNo}
             />
             <FormField
               label="Solar Panels"
               name="solarPanels"
               type="radio"
-              options={[
-                { value: "yes", label: "Yes" },
-                { value: "no", label: "No" },
-              ]}
+              options={yesNo}
             />
             <FormField
               label="People in Home"
               name="peopleInHome"
               type="radio"
-              options={[
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3", label: "3" },
-                { value: "4", label: "4" },
-                { value: "5+", label: "5 or more" },
-              ]}
+              options={peopleInHomeOptions}
             />
             <FormField
               label="Rooms in Home"
               name="roomsInHome"
               type="radio"
-              options={[
-                { value: "1-3", label: "1-3" },
-                { value: "4-6", label: "4-6" },
-                { value: "7-9", label: "7-9" },
-                { value: "10+", label: "10 or more" },
-              ]}
+              options={roomsInHomeOptions}
             />
             <FormField
               label="Number of Fridges"
               name="fridges"
               type="radio"
-              options={[
-                { value: "1", label: "1" },
-                { value: "2", label: "2" },
-                { value: "3+", label: "3 or more" },
-              ]}
+              options={fridgesOptions}
             />
             <FormField
               label="Gas Connection"
               name="gasConnection"
+              option
               type="radio"
-              options={[
-                { value: "yes", label: "Yes" },
-                { value: "no", label: "No" },
-              ]}
+              options={yesNo}
             />
             <FormField
               label="Home Heating"
               name="heatingHome"
               type="radio"
-              options={[
-                { value: "None", label: "None" },
-                { value: "Electric", label: "Electric" },
-                { value: "Gas", label: "Gas" },
-                { value: "Other", label: "Other" },
-              ]}
+              options={heatingHomeOptions}
             />
             <FormField
               label="Home Cooling"
               name="coolingHome"
               type="radio"
-              options={[
-                { value: "None", label: "None" },
-                { value: "Air Conditioning", label: "Air Conditioning" },
-                { value: "Fans", label: "Fans" },
-                { value: "Other", label: "Other" },
-              ]}
+              options={coolingHomeOptions}
             />
             <FormField
               label="Clothes Dryer"
               name="dryer"
               type="radio"
-              options={[
-                { value: "yes", label: "Yes" },
-                { value: "no", label: "No" },
-              ]}
+              options={yesNo}
             />
             <FormField
               label="Dryer Usage (per week)"
               name="dryerUsage"
               type="radio"
-              options={[
-                { value: "0", label: "0 times" },
-                { value: "1-2", label: "1-2 times" },
-                { value: "3-4", label: "3-4 times" },
-                { value: "5+", label: "5 or more times" },
-              ]}
+              options={dryerUsageOptions}
             />
             <FormField
               label="Hot Water System"
               name="hotWaterSystem"
               type="radio"
-              options={[
-                { value: "Electric", label: "Electric" },
-                { value: "Gas", label: "Gas" },
-                { value: "Solar", label: "Solar" },
-                { value: "Heat Pump", label: "Heat Pump" },
-              ]}
+              options={hotWaterSystemOptions}
             />
             <FormField
               label="Controlled Load"
               name="controlledLoad"
               type="radio"
-              options={[
-                { value: "yes", label: "Yes" },
-                { value: "no", label: "No" },
-              ]}
+              options={yesNo}
             />
             <FormField
               label="Distance from Sea"
               name="seaDistance"
               type="radio"
-              options={[
-                { value: "don't know", label: "Don't know" },
-                { value: "less than 1km", label: "Less than 1km" },
-                { value: "1-10km", label: "1-10km" },
-                { value: "more than 10km", label: "More than 10km" },
-              ]}
+              options={seaDistanceOptions}
             />
             <FormField
               label="Washing Machine"
               name="washingMachine"
               type="radio"
-              options={[
-                { value: "yes", label: "Yes" },
-                { value: "no", label: "No" },
-              ]}
+              options={yesNo}
             />
             <FormField
               label="Washing Machine Usage"
               name="washingMachineUsage"
               type="radio"
-              options={[
-                { value: "0-1", label: "0-1 times per week" },
-                { value: "2-3", label: "2-3 times per week" },
-                { value: "4-5", label: "4-5 times per week" },
-                { value: "6+", label: "6+ times per week" },
-              ]}
+              options={washingMachineUsageOptions}
             />
           </div>
         </form>
